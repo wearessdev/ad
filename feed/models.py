@@ -26,6 +26,7 @@ class Article(models.Model):
     publish_date = models.DateTimeField()
     like = models.IntegerField()
     love = models.IntegerField()
+    thumbnail = models.ImageField(blank=True, null=True)
 
     def get_author(self):
         return self.author

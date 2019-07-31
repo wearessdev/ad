@@ -5,9 +5,13 @@ from django.db import models
 
 class Team(models.Model):
     name = models.CharField(max_length=90)
+    thumbnail = models.ImageField(blank=True, null=True)
     twitter_url = models.URLField()
     facebook_url = models.URLField()
     instagram_url = models.URLField()
+
+    def get_roster(self):
+        return self.roster_set.all()
 
     def __str__(self):
         return self.name
@@ -28,7 +32,7 @@ class Record(models.Model):
 
 
 class SeasonSchedule(models.Model):
-    season = models.CharField(max_length=90)
+    season = models.CharField(max_length=90, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     year_start = models.IntegerField()
     year_end = models.IntegerField()
@@ -52,7 +56,7 @@ class ScheduleItem(models.Model):
     win = models.BooleanField()
     loss = models.BooleanField()
     score = models.CharField(max_length=14)
-    season = models.ForeignKey(SeasonSchedule, on_delete=models.CASCADE)
+    season = models.ForeignKey(SeasonSchedule, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -65,6 +69,9 @@ class Roster(models.Model):
 
     def get_players(self):
         return self.player_set.all()
+
+    def __str__(self):
+        return "%s - Roster" % self.team.name
 
 
 class Player(models.Model):

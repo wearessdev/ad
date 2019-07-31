@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 from accounts.API.views import (
     GetAuthToken
 )
@@ -33,6 +37,11 @@ from feed.API.views import (
     FeedImageViewSet
 )
 
+from main.API.views import (
+    TeamViewSet,
+    RosterViewSet
+)
+
 router = DefaultRouter()
 router.register('api/categories', CategoryViewSet)
 router.register('api/articles', ArticleViewSet)
@@ -41,9 +50,14 @@ router.register('api/feed-images', FeedImageViewSet)
 router.register('api/users', SSUserViewSet)
 router.register('api/users-short', SSUserShortViewSet)
 
+###Teams
+router.register('api/teams', TeamViewSet)
+router.register('api/rosters', RosterViewSet)
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('api/get-auth-token/', GetAuthToken.as_view())
 ]
 
 urlpatterns += router.urls
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
