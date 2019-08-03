@@ -39,10 +39,11 @@ from feed.API.views import (
 
 from main.API.views import (
     TeamViewSet,
-    RosterViewSet
+    RosterViewSet,
+    SeasonScheduleViewSet
 )
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register('api/categories', CategoryViewSet)
 router.register('api/articles', ArticleViewSet)
 router.register('api/events', EventViewSet)
@@ -53,6 +54,8 @@ router.register('api/users-short', SSUserShortViewSet)
 ###Teams
 router.register('api/teams', TeamViewSet)
 router.register('api/rosters', RosterViewSet)
+router.register('api/schedule', SeasonScheduleViewSet)
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -1,9 +1,9 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from accounts.models import SSUser
+from rest_framework.response import Response
 
 # Create your models here.
-
 
 class Category(models.Model):
 
@@ -34,6 +34,26 @@ class Article(models.Model):
     def get_images(self):
         return self.feedimage_set.all()
 
+    def like_article(self):
+        self.like += 1
+        self.save()
+        return Response({"message":"Article Liked"})
+
+    def love_article(self):
+        self.love += 1
+        self.save()
+        return Response({"message":"Article Loved"})
+
+    def dislike_article(self):
+        self.like -= 1
+        self.save()
+        return Response({"message":"Article Disliked"})
+
+    def dislove_article(self):
+        self.like -= 1
+        self.save()
+        return Response({"message":"Article Disloved"})
+
     def __str__(self):
         return self.name
 
@@ -63,9 +83,3 @@ class FeedImage(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
-
-
-

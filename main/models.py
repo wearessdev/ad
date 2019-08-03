@@ -37,6 +37,9 @@ class SeasonSchedule(models.Model):
     year_start = models.IntegerField()
     year_end = models.IntegerField()
 
+    def get_schedule_items(self):
+        return self.scheduleitem_set.all()
+
     def __str__(self):
         return "%s %s" % (self.team.name, self.season)
 
