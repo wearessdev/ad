@@ -31,6 +31,13 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField()
+
+    def get_images(self, obj):
+        images = obj.get_images()
+        serializer = FeedImageSerializer(images, many=True)
+        return serializer.data
+
     class Meta:
         model = Event
         fields = '__all__'
